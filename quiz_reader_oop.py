@@ -24,8 +24,22 @@ class Quiz_Reader: #Imported the get quiz file for it probably works the same in
 
         self.load_question_lines(file_lines)
 
-    def load_question_lines(self, file_lines):
+    def load_question_lines(self, file_lines): #Imported tons of the part from Quiz Reader to here to make it have similar functions
         right_answer_list = [] 
         question_list = [] #To store the questions to randomize later
         temporary_storage = "" #To temporary store the entire question
 
+        for line in file_lines:
+            line = line.strip() 
+
+            if line.startswith("Question"): #To check if the line is the question
+                temporary_storage += line + "\n" #To store the line in the temporary storage
+    
+            elif line.startswith("A:") or line.startswith("B:") or line.startswith("C:") or line.startswith("D:"): #To check if the line are the answers
+                temporary_storage += line + "\n" #To store the line in the temporary storage
+
+            elif line.startswith("Right Answer"): #To check if the line is the correct answer in the current question
+                line = line.replace("Right Answer: ", "") #Removes the "Right Answer: " to make the answer remain 
+                right_answer_list.append(line) #To store the answer in the list
+                question_list.append(temporary_storage) #To store the question in the list
+                temporary_storage = "" #To reset the temporary
