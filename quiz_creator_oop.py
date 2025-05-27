@@ -12,9 +12,13 @@ class QuizCreator:
         file_path = os.path.join(downloads_folder, quiz_number) #imported file_path from quiz creator
 
         if os.path.exists(file_path): #Imported from quiz creator to check if the file is there or not
-            print(f"{quiz_number}" + " will be opened")
-            self.quiz_file = open(file_path, "a") #Changed to this for the previous one was not working
+            change_quiz = input("Would you like to change the contents of the quiz? Yes/No: ").lower()
 
+            if change_quiz == "yes":
+                print(f"{quiz_number}" + " will be opened")
+                self.quiz_file = open(file_path, "w") 
+            else:    
+                self.quiz_file = open(file_path, "a") #Changed to this for the previous one was not working
 
         else:
             print(f"{quiz_number}" + " does not exist") #If the file doesn't exist, then it will create it
@@ -36,7 +40,7 @@ class QuizCreator:
             option_c = input("Input option C of the question: ")
             option_d = input("Input option D of the question: ")
 
-            if len({option_a, option_b, option_c, option_d}) > 4: #Changed to this to make it look cleaner
+            if len({option_a, option_b, option_c, option_d}) < 4: #Changed to this to make it look cleaner
                 same_answer_detector = str(input("Same answer detected! Do you want to continue? Yes/No: "))
                 if same_answer_detector.lower() == "no":
                     print("Exiting...")
