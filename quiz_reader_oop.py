@@ -5,7 +5,7 @@ import random #Importing it because i need it to randomize the questions
 from colorama import Fore #Importing Fore to change text color
 import time #Importing it to make a delay in the terminal to make the flow more natural
 
-class Quiz: #Imported the get quiz file for it probably works the same in here
+class Quiz_Reader: #Imported the get quiz file for it probably works the same in here
     def get_quiz_file(self): #Getting the quiz file
         self.quiz_file = None #To store the opened file
 
@@ -14,4 +14,18 @@ class Quiz: #Imported the get quiz file for it probably works the same in here
         downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads") #imported downloads_folder from quiz creator oop
 
         file_path = os.path.join(downloads_folder, quiz_number) #imported file_path from quiz creator oop
+
+        self.read_question_lines(file_path)
+
+    def read_question_lines(self, file_path):
+        if os.path.exists(file_path): #To check if the file is there or not
+            with open(file_path, "r" ) as file:
+                file_lines = file.readlines() 
+
+        self.load_question_lines(file_lines)
+
+    def load_question_lines(self, file_lines):
+        right_answer_list = [] 
+        question_list = [] #To store the questions to randomize later
+        temporary_storage = "" #To temporary store the entire question
 
