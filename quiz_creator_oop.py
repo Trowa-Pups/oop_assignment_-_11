@@ -48,6 +48,13 @@ class QuizCreator:
                 
             right_answer = input("Input the right answer Ex.(A): ").lower() #Used lower() to make sure that the letter is always the same
 
+            self.write_question(question, option_a, option_b, option_c, option_d, right_answer) #To put all of the variables into the def write_question
+
+    def write_question(self, question, option_a, option_b, option_c, option_d, right_answer): #Imported and remake the write file because the previous one wasn't working
+        self.quiz_file.write(f"Question: {question} \n") #Print the input of the user in the text file
+        self.quiz_file.write(f"A: {option_a}\nB: {option_b}\nC: {option_c}\nD: {option_d}\n")
+        self.quiz_file.write(f"\n \nRight Answer: {right_answer} \n")
+
 quiz_creator = QuizCreator()
 quiz_creator.get_quiz_file()
 quiz_creator.questions_and_answers()
