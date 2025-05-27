@@ -36,7 +36,7 @@ class QuizCreator:
             option_c = input("Input option C of the question: ")
             option_d = input("Input option D of the question: ")
 
-            if option_a == option_b or option_a == option_c or option_a == option_d or option_b == option_c or option_b == option_d or option_c == option_d:
+            if len({option_a, option_b, option_c, option_d}) > 4: #Changed to this to make it look cleaner
                 same_answer_detector = str(input("Same answer detected! Do you want to continue? Yes/No: "))
                 if same_answer_detector.lower() == "no":
                     print("Exiting...")
