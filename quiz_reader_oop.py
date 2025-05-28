@@ -29,7 +29,10 @@ class QuizReader: #Imported the get quiz file for it probably works the same in 
             with open(file_path, "r" ) as file:
                 file_lines = file.readlines() 
 
-        self.load_question_lines(file_lines)
+            self.load_question_lines(file_lines)
+
+        else:
+            ("File does not exit")
 
     def load_question_lines(self, file_lines): #Imported tons of the part from Quiz Reader to here to make it have similar functions
         temporary_storage = "" #To temporary store the entire question
@@ -67,13 +70,14 @@ class QuizGame:
             return
 
     def quiz_start(self, question_list, right_answer_list):
-        random.shuffle(question_list, right_answer_list) #To shuffle the question list and right answer list to make it completely randomized
+        quiz_data = list(zip(question_list, right_answer_list)) #Using list(zip()) to correctly pair the question and answer and put it on a lis
+        random.shuffle(quiz_data) 
 
-        for question_number in enumerate(question_list): #Using enumerate to get the question number and get the question and correct answer from quiz_data
-            print(f"Question no.{question_number + 1}:\n {question_list}") #To prinnt the question
+        for question_number, (question, correct_answer) in enumerate(quiz_data): #Using enumerate to get the question number and get the question and correct answer from quiz_data
+            print(f"Question no.{question_number + 1}:\n {question}") #To prinnt the question
             user_answer = input("Please input your answer(Ex: A): ").lower() #using lower() to ensure every user input lines up with right answer
 
-            if user_answer == right_answer_list[question_number]: #To line up to the question number
+            if user_answer == correct_answer: #To line up to the question number
                 print("Correct!")
                 self.user_score += 1 #To add 1 point to the score
             
@@ -95,3 +99,4 @@ reader = QuizReader()
 reader.get_quiz_file()
 game = QuizGame()
 game.quiz_start(reader.question_list, reader.right_answer_list)
+game.user_score_counter(reader.question_list)
