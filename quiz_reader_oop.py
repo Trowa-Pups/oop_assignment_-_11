@@ -16,7 +16,7 @@ class QuizReader: #Imported the get quiz file for it probably works the same in 
 
     def get_quiz_file(self): #Getting the quiz file
 
-        quiz_number = str(input("Please input what quiz you are going to edit or create Ex.(quiz_#_1.txt): ")) #imported quiz_number from quiz creator oop
+        quiz_number = str(input(Fore.WHITE + "Please input what quiz you are going to edit or create Ex.(quiz_#_1.txt): ")) #imported quiz_number from quiz creator oop
 
         downloads_folder = os.path.join(os.path.expanduser("~"), "Downloads") #imported downloads_folder from quiz creator oop
 
@@ -27,12 +27,14 @@ class QuizReader: #Imported the get quiz file for it probably works the same in 
     def read_question_lines(self, file_path):
         if os.path.exists(file_path): #To check if the file is there or not
             with open(file_path, "r" ) as file:
-                file_lines = file.readlines() 
+                print(Fore.WHITE, "Opening file...")
+                time.sleep(1)
+                file_lines = file.readlines() #Reads the lines of the file
 
             self.load_question_lines(file_lines)
 
         else:
-            ("File does not exit")
+            (Fore.RED , "File does not exit") #if the file doesnt exist
 
     def load_question_lines(self, file_lines): #Imported tons of the part from Quiz Reader to here to make it have similar functions
         temporary_storage = "" #To temporary store the entire question
@@ -52,21 +54,22 @@ class QuizReader: #Imported the get quiz file for it probably works the same in 
                 self.question_list.append(temporary_storage) #To store the question in the list
                 temporary_storage = "" #To reset the temporary
 
-        else:
-            print("Quiz file not found")
-
 class QuizGame:
     def __init__(self):
         self.user_score = 0
 
     def introduction(self):
-        print("Welcome to the Quiz!") #To welcome the user
+        print(Fore.LIGHTMAGENTA_EX + "Welcome to the Quiz!") #To welcome the user
+        time.sleep(2)
+
         user_countinue = input("Would you like to take the quiz? Yes/No: ").lower() #To see if the user would countinue with the quiz
+        time.sleep(0.5)
+
         if user_countinue == "yes":
-            print("Let's go to the quiz!")
+            print(Fore.LIGHTCYAN_EX + "Let's go to the quiz!")
 
         else:
-            print("Exiting program...") #If the user inputted no to exit the program
+            print(Fore.LIGHTWHITE_EX + "Exiting program...") #If the user inputted no to exit the program
             return
 
     def quiz_start(self, question_list, right_answer_list):
@@ -74,26 +77,30 @@ class QuizGame:
         random.shuffle(quiz_data) 
 
         for question_number, (question, correct_answer) in enumerate(quiz_data): #Using enumerate to get the question number and get the question and correct answer from quiz_data
-            print(f"Question no.{question_number + 1}:\n {question}") #To prinnt the question
+            print(Fore.WHITE + f"Question no.{question_number + 1}:\n {question}") #To prinnt the question
             user_answer = input("Please input your answer(Ex: A): ").lower() #using lower() to ensure every user input lines up with right answer
 
             if user_answer == correct_answer: #To line up to the question number
-                print("Correct!")
+                print(Fore.LIGHTGREEN_EX + "Correct!")
                 self.user_score += 1 #To add 1 point to the score
+                time.sleep(1)
             
             else:
-                print("Wrong!")
+                print(Fore.LIGHTRED_EX + "Wrong!")
+                time.sleep(1)
 
     def user_score_counter(self, question_list): #To see if the user passed or not
+        print(Fore.LIGHTYELLOW_EX + "Calculating Score...")
+        time.sleep(2)
 
         if self.user_score == len(question_list): #To see if user did a perfect job
-            print("You got a perfect score!", self.user_score,  "/",len(question_list)) 
+            print(Fore.YELLOW + "\nYou got a perfect score!", Fore.GREEN + "💯 Congratulations!", Fore.YELLOW , self.user_score,  "/",len(question_list)) 
 
         elif self.user_score >= len(question_list): #To see if user passed
-            print("You passed!", self.user_score,  "/",len(question_list))
+            print(Fore.YELLOW + "\nNice try! ❤ Better luck next time! 🍀", self.user_score,  "/",len(question_list))
 
         else: #The user failed
-            print("You failed, unfortunately", self.user_score,  "/",len(question_list))
+            print(Fore.YELLOW + "\nYou tried your best! Keep studying! 📖", self.user_score,  "/",len(question_list))
             
 reader = QuizReader()
 reader.get_quiz_file()
