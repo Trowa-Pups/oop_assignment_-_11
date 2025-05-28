@@ -5,9 +5,16 @@ import random #Importing it because i need it to randomize the questions
 from colorama import Fore #Importing Fore to change text color
 import time #Importing it to make a delay in the terminal to make the flow more natural
 
-class Quiz_Reader: #Imported the get quiz file for it probably works the same in here
-    def get_quiz_file(self): #Getting the quiz file
+class QuizReader: #Imported the get quiz file for it probably works the same in here
+    def __init__(self): #Researched about __init__ and decided to use it 
         self.quiz_file = None #To store the opened file
+
+        self.right_answer_list = [] #To store the right answers
+
+        self.question_list = [] #To store the questions to randomize later
+
+
+    def get_quiz_file(self): #Getting the quiz file
 
         quiz_number = str(input("Please input what quiz you are going to edit or create Ex.(quiz_#_1.txt): ")) #imported quiz_number from quiz creator oop
 
@@ -25,21 +32,36 @@ class Quiz_Reader: #Imported the get quiz file for it probably works the same in
         self.load_question_lines(file_lines)
 
     def load_question_lines(self, file_lines): #Imported tons of the part from Quiz Reader to here to make it have similar functions
-        right_answer_list = [] 
-        question_list = [] #To store the questions to randomize later
         temporary_storage = "" #To temporary store the entire question
 
         for line in file_lines:
             line = line.strip() 
 
-            if line.startswith("Question"): #To check if the line is the question
-                temporary_storage += line + "\n" #To store the line in the temporary storage
+        if line.startswith("Question"): #To check if the line is the question
+            temporary_storage += line + "\n" #To store the line in the temporary storage
     
-            elif line.startswith("A:") or line.startswith("B:") or line.startswith("C:") or line.startswith("D:"): #To check if the line are the answers
-                temporary_storage += line + "\n" #To store the line in the temporary storage
+        elif line.startswith("A:") or line.startswith("B:") or line.startswith("C:") or line.startswith("D:"): #To check if the line are the answers
+            temporary_storage += line + "\n" #To store the line in the temporary storage
 
-            elif line.startswith("Right Answer"): #To check if the line is the correct answer in the current question
-                line = line.replace("Right Answer: ", "") #Removes the "Right Answer: " to make the answer remain 
-                right_answer_list.append(line) #To store the answer in the list
-                question_list.append(temporary_storage) #To store the question in the list
-                temporary_storage = "" #To reset the temporary
+        elif line.startswith("Right Answer"): #To check if the line is the correct answer in the current question
+            line = line.replace("Right Answer: ", "") #Removes the "Right Answer: " to make the answer remain 
+            self.right_answer_list.append(line) #To store the answer in the list
+            self.question_list.append(temporary_storage) #To store the question in the list
+            temporary_storage = "" #To reset the temporary
+
+        else:
+            print("Quiz file not found")
+
+class QuizGame:
+    def __init__(self):
+        self.user_score = 0
+    def introduction():
+        print("Welcome to the Quiz!") #To welcome the user
+        user_countinue = ("Would you like to take the quiz? Yes/No: ").lower() #To see if the user would countinue with the quiz
+        if user_countinue == "Yes":
+            print("Let's go to the quiz!")
+
+        else:
+            print("Exiting program...") #If the user inputted no to exit the program
+            break
+
